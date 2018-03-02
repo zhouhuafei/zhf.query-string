@@ -1,7 +1,7 @@
 {
     "name": "zhf.query-string",
     "version": "1.0.1",
-    "description": "对象的序列化和字符串的解析",
+    "description": "解析URL查询字符串",
     "main": "dist/index.min.js",
     "scripts": {
         "codeLint": "eslint --ext .js,.vue,.html ./",
