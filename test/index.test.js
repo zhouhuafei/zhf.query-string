@@ -1,6 +1,6 @@
 const queryString = require('../dist/index.min');
 
-test(`字符串的序列化和解析`, () => {
+test(`对象的序列化和字符串的解析`, () => {
     console.log(queryString.queryParse('#a=1&b=2')); // {a: 1, b: 2}
     console.log(queryString.queryParse('?a=1&b=2')); // {a: 1, b: 2}
     console.log(queryString.queryParse('a=1&b=2')); // {a: 1, b: 2}

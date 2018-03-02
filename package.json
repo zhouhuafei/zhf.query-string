@@ -1,7 +1,7 @@
 {
     "name": "zhf.query-string",
-    "version": "1.0.0",
-    "description": "把html里面的尖括号字符转义成十进制编码",
+    "version": "1.0.1",
+    "description": "对象的序列化和字符串的解析",
     "main": "dist/index.min.js",
     "scripts": {
         "codeLint": "eslint --ext .js,.vue,.html ./",

@@ -1,4 +1,4 @@
-# 字符串的序列化和解析
+# 对象的序列化和字符串的解析
 ```
 const queryString = require('zhf.query-string');
 
