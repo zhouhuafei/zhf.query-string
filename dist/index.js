@@ -23,9 +23,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     QueryString.prototype.queryStringify = function () {
         var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
+        var self = this;
         var result = [];
         Object.keys(obj).forEach(function (key) {
-            result.push(key + '=' + encodeURIComponent(JSON.stringify(obj[key])));
+            var v = obj[key];
+            if (self.typeOf(v) === 'object' || self.typeOf(v) === 'array') {
+                v = JSON.stringify(v);
+            }
+            result.push(key + '=' + encodeURIComponent(v));
         });
         return result.join('&');
     };
@@ -51,6 +56,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             });
         }
         return result;
+    };
+
+    QueryString.prototype.typeOf = function (v) {
+        return Object.prototype.toString.call(v).slice(8, -1).toLowerCase();
     };
 
     return new QueryString();

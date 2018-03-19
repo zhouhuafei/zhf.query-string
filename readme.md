@@ -2,6 +2,7 @@
 ```
 const queryString = require('zhf.query-string');
 
+console.log(queryString.queryStringify({username: 'hello world'})); // username=hello%20world
 console.log(queryString.queryParse('#a=1&b=2')); // {a: 1, b: 2}
 console.log(queryString.queryParse('?a=1&b=2')); // {a: 1, b: 2}
 console.log(queryString.queryParse('a=1&b=2')); // {a: 1, b: 2}
