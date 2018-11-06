@@ -10,16 +10,19 @@
         window.zhf[name] = factory();
     }
 })('queryString', function () {
+    function typeOf(v) {
+        return Object.prototype.toString.call(v).slice(8, -1).toLowerCase();
+    }
+
     function QueryString() {
     }
 
     // {a:1, b:2} 序列成 'a=1&b=2'
     QueryString.prototype.queryStringify = function (obj = {}) {
-        const self = this;
         const result = [];
         Object.keys(obj).forEach(function (key) {
             let v = obj[key];
-            if (self.typeOf(v) === 'object' || self.typeOf(v) === 'array') {
+            if (typeOf(v) === 'object' || typeOf(v) === 'array') {
                 v = JSON.stringify(v);
             }
             result.push(`${key}=${encodeURIComponent(v)}`);
@@ -46,10 +49,6 @@
             });
         }
         return result;
-    };
-
-    QueryString.prototype.typeOf = function (v) {
-        return Object.prototype.toString.call(v).slice(8, -1).toLowerCase();
     };
 
     return new QueryString();

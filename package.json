@@ -1,6 +1,6 @@
 {
     "name": "zhf.query-string",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "解析URL查询字符串",
     "main": "dist/index.min.js",
     "scripts": {
