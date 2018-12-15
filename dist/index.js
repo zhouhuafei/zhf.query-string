@@ -17,17 +17,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         window.zhf[name] = factory();
     }
 })('queryString', function () {
+    function typeOf(v) {
+        return Object.prototype.toString.call(v).slice(8, -1).toLowerCase();
+    }
+
     function QueryString() {}
 
     // {a:1, b:2} 序列成 'a=1&b=2'
     QueryString.prototype.queryStringify = function () {
         var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-        var self = this;
         var result = [];
         Object.keys(obj).forEach(function (key) {
             var v = obj[key];
-            if (self.typeOf(v) === 'object' || self.typeOf(v) === 'array') {
+            if (typeOf(v) === 'object' || typeOf(v) === 'array') {
                 v = JSON.stringify(v);
             }
             result.push(key + '=' + encodeURIComponent(v));
@@ -35,7 +38,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return result.join('&');
     };
 
-    // 'a=1&b=2' 解析成 {a:1, b:2}
+    // 'a=1&b=2' 解析成 {a:'1', b:'2'}
     QueryString.prototype.queryParse = function (str) {
         var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -49,17 +52,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             str.split('&').forEach(function (v) {
                 var arr = v.split('=');
                 try {
-                    result[arr[0]] = JSON.parse(decodeURIComponent(arr[1]));
+                    // 先parse一下，如果是对象就解析。
+                    result[arr[0]] = JSON.parse(String(decodeURIComponent(arr[1])));
                 } catch (e) {
-                    result[arr[0]] = decodeURIComponent(arr[1]);
+                    // 如果不是对象就转成字符串。
+                    result[arr[0]] = String(decodeURIComponent(arr[1]));
                 }
             });
         }
         return result;
-    };
-
-    QueryString.prototype.typeOf = function (v) {
-        return Object.prototype.toString.call(v).slice(8, -1).toLowerCase();
     };
 
     return new QueryString();

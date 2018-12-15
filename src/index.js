@@ -30,7 +30,7 @@
         return result.join('&');
     };
 
-    // 'a=1&b=2' 解析成 {a:1, b:2}
+    // 'a=1&b=2' 解析成 {a:'1', b:'2'}
     QueryString.prototype.queryParse = function (str, opts = {}) {
         const isFilterHashMark = opts.isFilterHashMark || true; // 是否过滤hash标识#号
         const isFilterSearchMark = opts.isFilterSearchMark || true; // 是否过滤search标识?号
@@ -42,9 +42,11 @@
             str.split('&').forEach(function (v) {
                 const arr = v.split('=');
                 try {
-                    result[arr[0]] = JSON.parse(decodeURIComponent(arr[1]));
+                    // 先parse一下，如果是对象就解析。
+                    result[arr[0]] = JSON.parse(String(decodeURIComponent(arr[1])));
                 } catch (e) {
-                    result[arr[0]] = decodeURIComponent(arr[1]);
+                    // 如果不是对象就转成字符串。
+                    result[arr[0]] = String(decodeURIComponent(arr[1]));
                 }
             });
         }
