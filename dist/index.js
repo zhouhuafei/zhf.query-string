@@ -51,13 +51,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
             str.split('&').forEach(function (v) {
                 var arr = v.split('=');
+                var res = '';
                 try {
-                    // 先parse一下，如果是对象就解析。
-                    result[arr[0]] = JSON.parse(String(decodeURIComponent(arr[1])));
+                    // parse成功说明是正规的json格式的数据。走这里。
+                    res = JSON.parse(decodeURIComponent(arr[1]));
                 } catch (e) {
-                    // 如果不是对象就转成字符串。
-                    result[arr[0]] = String(decodeURIComponent(arr[1]));
+                    // parse失败说明非正规的json格式的数据。走这里。
+                    res = decodeURIComponent(arr[1]);
                 }
+                // 地址栏中获取的数据其类型默认都应该是字符串
+                if (typeof res === 'number') {
+                    res = String(res);
+                }
+                result[arr[0]] = res;
             });
         }
         return result;
